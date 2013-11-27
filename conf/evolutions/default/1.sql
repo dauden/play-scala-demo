@@ -16,10 +16,10 @@ create table member (
 
 create table input (
   id                        bigint not null,
-  type                      varchar(255) not null,
-  date		                timestamp not null,
+  name                      varchar(255) not null,
+  createOn	                timestamp not null,
   amount					double not null,  
-  member_id                 bigint not null,
+  memberId                  bigint not null,
   constraint pk_input primary key (id)
 );
 
