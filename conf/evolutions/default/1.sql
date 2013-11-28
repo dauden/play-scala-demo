@@ -29,8 +29,8 @@ create sequence input_seq start with 1000;
 
 alter table member add constraint unq_email unique(email);
 
-alter table input add constraint fk_input_member_1 foreign key (member_id) references member (id) on delete restrict on update restrict;
-create index ix_input_member_1 on input (member_id);
+alter table input add constraint fk_input_member_1 foreign key (memberId) references member (id) on delete restrict on update restrict;
+create index ix_input_member_1 on input (memberId);
 
 # --- !Downs
 
