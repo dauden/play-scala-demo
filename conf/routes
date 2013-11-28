@@ -4,14 +4,12 @@
 
 # Home page
 GET     /                           controllers.Application.index
-
-# Signup
-GET     /signup                     controllers.SignUp.form
+GET     /logout                           controllers.Application.logout
 
 # Members
 # ~~~~
 # list (look at the default values for pagination parameters)
-GET     /members                  	controllers.Member.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+GET     /members                  	controllers.Member.list
 
 # add
 #GET     /members/new              	controllers.Member.create

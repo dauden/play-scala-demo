@@ -11,7 +11,7 @@ import models._
 
 object Member extends Controller {
   
-  def list(page: Int, orderBy: Int, filter: String) = Action {
+  def list = Action {
     Ok(html.member.list())
   }
   

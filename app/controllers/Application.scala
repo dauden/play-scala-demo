@@ -11,4 +11,7 @@ object Application extends Controller {
     Ok(html.index())
   }
   
+  def logout = Action {
+    Ok(html.index())
+  }
 }
