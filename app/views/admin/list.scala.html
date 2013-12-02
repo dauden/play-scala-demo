@@ -4,17 +4,17 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#">ReminderService</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="@routes.Member.create">New Input</a></li>
-				<li><a href="@routes.Application.logout">Logout</a></li>
+				<li><a href=#>Input History</a></li>
+				<li><a href="#">Profile</a></li>
+				<li><a href="#">Logout</a></li>
 			</ul>
 		</div>
 		<!--/.navbar-collapse -->
@@ -33,26 +33,30 @@
 		</div>
 	</div>
 	<div class="row clearfix">
-		<div class="col-md-12 column">			
+		<div class="col-md-12 column">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Type</th>
-						<th>Date</th>
-						<th>Amount</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Role</th>
+						<th>Report Schedule</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>Type</td>
-						<td>DD-MM-YYY</td>
-						<td>Amount &#36;</td>
-						<td class="text-right">
+						<td>Full Name</td>
+						<td>email@@mailinator.com</td>
+						<td>1986lyn-xn$_sline.sdo1234df</td>
+						<td>member</td>
+						<td>MM-DD-YYYY</td>
+						<td class="text-right">							
 							<button type="button" class="btn btn-primary">Update</button>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<button type="button" class="btn btn-danger">Deactivate</button>
 						</td>
-					</tr>				
+					</tr>
 				</tbody>
 			</table>
 			<div class="text-center">

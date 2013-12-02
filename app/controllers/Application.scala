@@ -14,4 +14,12 @@ object Application extends Controller {
   def logout = Action {
     Ok(html.index())
   }
+  
+  def admin = Action {
+    Ok(html.admin.list())
+  }
+  
+  def inputs = Action {
+    Ok(html.input.list())
+  }
 }

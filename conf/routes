@@ -5,22 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /logout                     controllers.Application.logout
-
-# Members
-# ~~~~
-# list (look at the default values for pagination parameters)
-GET     /members                  	controllers.Member.list
-
-# create
-GET     /members/new              	controllers.Member.create
-#POST    /members                  	controllers.Member.save
-
-# edit
-#GET     /members/:id              	controllers.Member.edit(id:Long)
-#POST    /members/:id              	controllers.Member.update(id:Long)
-
-# delete
-#POST    /members/:id/delete       	controllers.Member.delete(id:Long)
+GET		/admin						controllers.Application.admin
+GET		/inputs						controllers.Application.inputs
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

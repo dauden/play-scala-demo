@@ -9,6 +9,6 @@ import views._
 
 import models._
 
-object Member extends Controller {
-
+object Input extends Controller {
+  
 }
