@@ -4,15 +4,15 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /logout                           controllers.Application.logout
+GET     /logout                     controllers.Application.logout
 
 # Members
 # ~~~~
 # list (look at the default values for pagination parameters)
 GET     /members                  	controllers.Member.list
 
-# add
-#GET     /members/new              	controllers.Member.create
+# create
+GET     /members/new              	controllers.Member.create
 #POST    /members                  	controllers.Member.save
 
 # edit

@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(customStyle: Html)
+@(title: String)(content: Html)
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
 	    <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
 	
 	    <!-- Custom styles for this template -->
-	    @customStyle	    
+	    <link href="@routes.Assets.at("stylesheets/style.css")" rel="stylesheet">	    
 	
 	    <!-- Just for debugging purposes. Don't actually copy this line! -->
 	    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -29,8 +29,15 @@
 	    <![endif]-->
     </head>
     <body>
-
-        @content
+		<div id="wrap">
+			@content
+		</div>
+        
+        <div id="footer">
+        	<div class="container">
+                <p class="text-muted credit">&copy; Created by HVNGroup</p>
+        	</div>
+		</div>
         
         <script src="@routes.Assets.at("javascripts/jquery-1.10.2.min.js")"></script>
 		<script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>

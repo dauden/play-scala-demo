@@ -15,4 +15,8 @@ object Member extends Controller {
     Ok(html.member.list())
   }
   
+  def create = Action {
+    Ok(html.member.createForm())
+  }
+  
 }
