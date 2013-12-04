@@ -1,0 +1,107 @@
+@(currentPage: Page[(Input, Option[Member])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage: Int, newOrderBy: Option[Int] = None) = @{
+    routes.Application.list(newPage, newOrderBy.map { orderBy =>
+        if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
+    }.getOrElse(currentOrderBy), currentFilter)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(orderBy: Int, title: String) = {
+    <th class="col@orderBy header @if(scala.math.abs(currentOrderBy) == orderBy) @{if(currentOrderBy < 0) "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, Some(orderBy))">@title</a>
+    </th>
+}
+
+@main {    
+
+    @flash.get("success").map { message =>
+        <div class="alert alert-success">
+            <strong>Done!</strong> @message
+        </div>
+    }
+
+    <div class="row clearfix">
+    	<div class="col-md-6 column">
+    		@helper.form(action=routes.Application.list(), 'class -> "form-inline") {
+    			<div class="form-group">
+    				<input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Input date" class="form-control">
+    			</div>
+		        <button type="submit" id="searchsubmit" class="btn btn-primary">Filter</button>
+		     }
+    	</div>
+    	<div class="col-md-6 column">
+    		<div class="text-right">
+    			<a class="btn btn-success" id="add" href="@routes.Application.create()">Add a new input</a>
+    		</div>
+    	</div>
+    </div>
+    
+    <br/>
+    
+    @Option(currentPage.items).filterNot(_.isEmpty).map { inputs =>
+	    
+ 		<table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                	@header(2, "#")
+                    @header(3, "Input Date")
+                    @header(4, "Amount")
+                    @header(5, "Member")
+                </tr>
+            </thead>
+            <tbody>
+
+                @inputs.map { 
+                    case (input, member) => {
+                        <tr>
+                            <td><a href="@routes.Application.edit(input.id.get)">@input.id</a></td>
+                            <td>@input.inputdate</td>
+                            <td>@input.amount</td>
+                            <td>@member.map(_.name)</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+        <ul class="pagination">
+            @currentPage.prev.map { page =>
+                <li class="prev">
+                    <a href="@link(page)">&larr; Previous</a>
+                </li> 
+            }.getOrElse {
+                <li class="prev disabled">
+                    <a>&larr; Previous</a>
+                </li>
+            }
+            <li class="current">
+                <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + inputs.size) of @currentPage.total</a>
+            </li>
+            @currentPage.next.map { page =>
+                <li class="next">
+                    <a href="@link(page)">Next &rarr;</a>
+                </li> 
+            }.getOrElse {
+                <li class="next disabled">
+                    <a>Next &rarr;</a>
+                </li>
+            }
+        </ul>
+			        
+    }.getOrElse {
+        
+        <div class="well">
+            <em>Nothing to display</em>
+        </div>
+        
+    }
+        
+}
