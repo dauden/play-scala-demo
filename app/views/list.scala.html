@@ -4,7 +4,7 @@
 * Helper generating navigation links    *
 ****************************************@
 @link(newPage: Int, newOrderBy: Option[Int] = None) = @{
-    routes.Application.list(newPage, newOrderBy.map { orderBy =>
+    routes.InputController.list(newPage, newOrderBy.map { orderBy =>
         if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
     }.getOrElse(currentOrderBy), currentFilter)
     
@@ -29,7 +29,7 @@
 
     <div class="row clearfix">
     	<div class="col-md-6 column">
-    		@helper.form(action=routes.Application.list(), 'class -> "form-inline") {
+    		@helper.form(action=routes.InputController.list(), 'class -> "form-inline") {
     			<div class="form-group">
     				<input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Input date" class="form-control">
     			</div>
@@ -38,7 +38,7 @@
     	</div>
     	<div class="col-md-6 column">
     		<div class="text-right">
-    			<a class="btn btn-success" id="add" href="@routes.Application.create()">Add a new input</a>
+    			<a class="btn btn-success" id="add" href="@routes.InputController.create()">Add a new input</a>
     		</div>
     	</div>
     </div>
@@ -61,7 +61,7 @@
                 @inputs.map { 
                     case (input, member) => {
                         <tr>
-                            <td><a href="@routes.Application.edit(input.id.get)">@input.id</a></td>
+                            <td><a href="@routes.InputController.edit(input.id.get)">@input.id</a></td>
                             <td>@input.inputdate</td>
                             <td>@input.amount</td>
                             <td>@member.map(_.name)</td>

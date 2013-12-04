@@ -23,9 +23,6 @@ object Input {
   
   // -- Parsers
   
-  /**
-   * Parse a Computer from a ResultSet
-   */
   val simple = {
     get[Pk[Long]]("input.id") ~
     get[Date]("input.inputdate") ~
@@ -35,32 +32,18 @@ object Input {
     }
   }
   
-  /**
-   * Parse a (Computer,Company) from a ResultSet
-   */
   val withMember = Input.simple ~ (Member.simple ?) map {
     case input~member => (input,member)
   }
   
   // -- Queries
   
-  /**
-   * Retrieve a computer from the id.
-   */
   def findById(id: Long): Option[Input] = {
     DB.withConnection { implicit connection =>
       SQL("select * from input where id = {id}").on('id -> id).as(Input.simple.singleOpt)
     }
   }
   
-  /**
-   * Return a page of (Computer,Company).
-   *
-   * @param page Page to display
-   * @param pageSize Number of computers per page
-   * @param orderBy Computer property used for sorting
-   * @param filter Filter applied on the name column
-   */
   def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Page[(Input, Option[Member])] = {
     
     val offest = pageSize * page
@@ -98,12 +81,6 @@ object Input {
     
   }
   
-  /**
-   * Update a computer.
-   *
-   * @param id The computer id
-   * @param computer The computer values.
-   */
   def update(id: Long, input: Input) = {
     DB.withConnection { implicit connection =>
       SQL(
@@ -121,11 +98,6 @@ object Input {
     }
   }
   
-  /**
-   * Insert a new computer.
-   *
-   * @param computer The computer values.
-   */
   def insert(input: Input) = {
     DB.withConnection { implicit connection =>
       SQL(
@@ -143,11 +115,6 @@ object Input {
     }
   }
   
-  /**
-   * Delete a computer.
-   *
-   * @param id Id of the computer to delete.
-   */
   def delete(id: Long) = {
     DB.withConnection { implicit connection =>
       SQL("delete from input where id = {id}").on('id -> id).executeUpdate()
@@ -157,10 +124,7 @@ object Input {
 }
 
 object Member {
-    
-  /**
-   * Parse a Company from a ResultSet
-   */
+  
   val simple = {
     get[Pk[Long]]("member.id") ~
     get[String]("member.name") ~
@@ -170,11 +134,25 @@ object Member {
     }
   }
   
-  /**
-   * Construct the Map[String,String] needed to fill a select options set.
-   */
   def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
     SQL("select * from member order by name").as(Member.simple *).map(m => m.id.toString -> m.name)
+  }
+  
+  def insert(member: Member) = {
+    DB.withConnection { implicit connection =>
+      SQL(
+        """
+          insert into member values (
+            (select next value for member_seq), 
+            {name}, {email}, {password}
+          )
+        """
+      ).on(
+        'name -> member.name,
+        'email -> member.email,
+        'password -> member.password
+      ).executeUpdate()
+    }
   }
   
 }

@@ -10,12 +10,10 @@ import anorm._
 import views._
 import models._
 
-/**
- * Manage a database of computers
- */
-object Application extends Controller { 
 
-  val Home = Redirect(routes.Application.list(0, 2, ""))
+object InputController extends Controller { 
+
+  val Home = Redirect(routes.InputController.list(0, 2, ""))
   
   val inputForm = Form(
     mapping(
@@ -27,10 +25,7 @@ object Application extends Controller {
   )
   
   // -- Actions
- 
-  def index = Action { Home }
   
-
   def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
     Ok(html.list(
       Input.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
@@ -49,7 +44,7 @@ object Application extends Controller {
       formWithErrors => BadRequest(html.editForm(id, formWithErrors, Member.options)),
       input => {
         Input.update(id, input)
-        Home.flashing("success" -> "Input %s has been updated".format(input.id))
+        Home.flashing("success" -> "An input has been updated")
       }
     )
   }
@@ -63,7 +58,7 @@ object Application extends Controller {
       formWithErrors => BadRequest(html.createForm(formWithErrors, Member.options)),
       input => {
         Input.insert(input)
-        Home.flashing("success" -> "Input %s has been created".format(input.id))
+        Home.flashing("success" -> "New input has been created")
       }
     )
   }
