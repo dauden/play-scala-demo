@@ -80,6 +80,42 @@ object Input {
     }
     
   }
+  def listBalance(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%",email: String="%" ): Page[(Input, Option[Member])] = {
+    
+    val offest = pageSize * page
+    //i.id, i.inputdate,i.amount
+    DB.withConnection { implicit connection =>
+      
+      val inputs = SQL(
+        """
+          select * from input as i,member as m
+          where m.email ={email} and  i.member_id = m.id and i.inputdate like {filter}
+          order by {orderBy} nulls last
+          limit {pageSize} offset {offset}
+        """
+      ).on(
+        'pageSize -> pageSize, 
+        'offset -> offest,
+        'filter -> filter,
+        'orderBy -> orderBy,
+        'email -> email
+      ).as(Input.withMember *)
+
+      val totalRows = SQL(
+        """
+          select count(i.id) from input as i, member as m
+          where m.email = {email} and i.member_id = m.id and  i.inputdate like {filter}
+        """
+      ).on(
+          'email -> email,
+          'filter -> filter
+      ).as(scalar[Long].single)
+
+      Page(inputs, page, offest, totalRows)
+      
+    }
+    
+  }
   
   def update(id: Long, input: Input) = {
     DB.withConnection { implicit connection =>
@@ -154,5 +190,49 @@ object Member {
       ).executeUpdate()
     }
   }
+  /**
+   * Authenticate a User.
+   */
+  def authenticate(email: String, password: String): Option[Member] = {
+    DB.withConnection { implicit connection =>
+      SQL(
+        """
+         select * from member where 
+         email = {email} and password = {password}
+        """
+      ).on(
+        'email -> email,
+        'password -> password
+      ).as(Member.simple.singleOpt)
+    }
+  }
+  
+  
+  /**
+   * Retrieve a Member from id.
+   */
+  def findById(id: Long): Option[Member] = {
+    DB.withConnection { implicit connection =>
+      SQL("select * from member where id = {id}").on(
+        'id -> id
+      ).as(Member.simple.singleOpt)
+    }
+  }
+  
+  /**
+   * Retrieve a Member from email.
+   */
+  def findByEmail(email:  String): Option[Member] = {
+    DB.withConnection { implicit connection =>
+      SQL("select * from member where email = {email}").on(
+        'email -> email
+      ).as(Member.simple.singleOpt)
+    }
+  }
+  
+  
+  
+  
+  
   
 }

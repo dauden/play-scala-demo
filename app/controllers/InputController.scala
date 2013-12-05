@@ -8,7 +8,8 @@ import play.api.data.Forms._
 import anorm._
 
 import views._
-import models._
+import models.Input   //imported `Input' is permanently hidden by definition of object Input in package controllers
+import models.Member
 
 
 object InputController extends Controller { 
@@ -21,20 +22,28 @@ object InputController extends Controller {
       "inputdate" -> date("yyyy-MM-dd"),
       "amount" -> longNumber,      
       "member" -> longNumber
-    )(Input.apply)(Input.unapply)
+    )(models.Input.apply)(models.Input.unapply)
   )
   
   // -- Actions
   
   def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
     Ok(html.list(
-      Input.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
+      models.Input.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
       orderBy, filter
     ))
   }
   
+  def listBalance(page: Int, orderBy: Int, filter: String, email: String) = Action { implicit request =>
+    Ok(html.list(
+      models.Input.listBalance(page = page, orderBy = orderBy, filter = ("%"+filter+"%"), email = email),
+      orderBy, filter
+    ))
+  }
+  
+  
   def edit(id: Long) = Action {
-    Input.findById(id).map { input =>
+    models.Input.findById(id).map { input =>
       Ok(html.editForm(id, inputForm.fill(input), Member.options))
     }.getOrElse(NotFound)
   }
@@ -43,7 +52,7 @@ object InputController extends Controller {
     inputForm.bindFromRequest.fold(
       formWithErrors => BadRequest(html.editForm(id, formWithErrors, Member.options)),
       input => {
-        Input.update(id, input)
+        models.Input.update(id, input)
         Home.flashing("success" -> "An input has been updated")
       }
     )
@@ -57,14 +66,14 @@ object InputController extends Controller {
     inputForm.bindFromRequest.fold(
       formWithErrors => BadRequest(html.createForm(formWithErrors, Member.options)),
       input => {
-        Input.insert(input)
+        models.Input.insert(input)
         Home.flashing("success" -> "New input has been created")
       }
     )
   }
   
   def delete(id: Long) = Action {
-    Input.delete(id)
+    models.Input.delete(id)
     Home.flashing("success" -> "Complete deletion")
   }
 
