@@ -1,52 +1,50 @@
 @* login2 Template File *@
 @(form: Form[(String,String)])(implicit flash: Flash)
-
-<html>
-    <head>
-        <title>Zentasks</title>
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-    </head>
-    <body>
-        
-        <header>
-            <a href="#" id="logo"><span>Zen</span>tasks</a>
-        </header>
-        
-        @helper.form(routes.MemberController.authenticate) {
+@main {
+<div class="row clearfix">
+	<div class="col-md-8 column">
+		@helper.form(routes.MemberController.authenticate, 'class -> "form-horizontal well")  {	
+			<div>
+				<p class = "h1 small" align="center"> Log in.</p>
+				<p class =" h2 small" align="center">Don't have a account yet?
+					 <a href="@routes.MemberController.signUp">Sign up. </a><p>
+				<br>
+			</div>
+			<div >
+				@form.globalError.map { error =>
+	                <p class="error">
+	                    @error.message
+	                </p>
+           		}
             
-            <h1>Sign in</h1>
-            
-            @form.globalError.map { error =>
-                <p class="error">
-                    @error.message
-                </p>
-            }
-            
-            @flash.get("success").map { message =>
-                <p class="success">
-                    @message
-                </p>
-            }
-            
-            <p>
-                <input type="email" name="email" placeholder="Email" id="email" value="@form("email").value">
-            </p>
-            <p>
-                <input type="password" name="password" id="password" placeholder="Password">
-            </p>
-            <p>
-                <button type="submit" id="loginbutton">Login</button>
-            </p>
-            
-        }
-        
-        <p class="note">
-            Try <em>guillaume@@sample.com</em> with <em>secret</em> as password.
-        </p>
-            
-    </body>
-</html>
+	            @flash.get("success").map { message =>
+	                <p class="success">
+	                    @message
+	                </p>
+	            }
+			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="email">Email</label>
+				<div class="col-md-4">
+					<input type="email" class="form-control" id="email" name="email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="password">Password</label>
+				<div class="col-md-4">
+					<input type="password" class="form-control" id="password" name="password">
+				</div>
+			</div> 
+            <div class="form-group">
+		    	<div class="col-md-4 col-md-offset-4">
+		      		<button type="submit" class="btn btn-primary">Log in</button>
+		    	</div>
+		  	</div>
+		}
+	</div>
+</div>
+    
+}
     
 
 

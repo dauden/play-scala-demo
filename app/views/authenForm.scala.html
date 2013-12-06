@@ -1,35 +1,42 @@
 @import helper._ 
 @main {
 	
-	<div class="row clearfix">
-		<div class="col-md-8 column">
-			@form(routes.MemberController.save(), 'class -> "form-horizontal well") {
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="name">Full name</label>
-					<div class="col-md-4">
-						<input type="text" class="form-control" id="name" name="name">
-					</div>
+<div class="row clearfix">
+	<div class="col-md-8 column">
+		@form(routes.MemberController.save(), 'class -> "form-horizontal well") {			
+			<div>
+				<p class = "h1 small" align="center"> Sign up.</p>
+				<p class =" h2 small" align="center">Already a member?  
+					<a href="@routes.MemberController.index">Log in. </a><p>
+				<br>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="name">Full name</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="name" name="name">
 				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="email">Email</label>
-					<div class="col-md-4">
-						<input type="email" class="form-control" id="email" name="email">
-					</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="email">Email</label>
+				<div class="col-md-4">
+					<input type="email" class="form-control" id="email" name="email">
 				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="password">Password</label>
-					<div class="col-md-4">
-						<input type="password" class="form-control" id="password" name="password">
-					</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="password">Password</label>
+				<div class="col-md-4">
+					<input type="password" class="form-control" id="password" name="password">
 				</div>
-	            
-	            <div class="form-group">
-			    	<div class="col-md-4 col-md-offset-4">
-			      		<button type="submit" class="btn btn-primary">Save</button>
-			    	</div>
-			  	</div>
-			}
-		</div>
+			</div>
+            
+            <div class="form-group">
+		    	<div class="col-md-4 col-md-offset-4">
+		      		<button type="submit" class="btn btn-primary">Save</button>
+		    	</div>
+		  	</div>
+		}
 	</div>
+</div>
     
 }

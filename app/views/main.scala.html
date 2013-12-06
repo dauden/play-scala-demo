@@ -39,12 +39,12 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="@routes.InputController.list(0,2,"")">ReminderService</a>
+						<a class="navbar-brand" href="@routes.InputController.listBalance(0,2,"","")">ReminderService</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-left">
       						<li><a href="#">Profile</a></li>
-      						<li><a href="#">Logout</a></li>
+      						<li><a href="@routes.MemberController.logout">Logout</a></li>
     					</ul>
 						<form class="navbar-form navbar-right" role="search">
       						<div class="form-group">
@@ -55,6 +55,7 @@
       						</div>
       						<button type="submit" class="btn btn-primary">Login</button>
     					</form>
+    					
 					</div>
 				</div>
 			</div>			

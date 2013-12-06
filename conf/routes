@@ -5,14 +5,14 @@
 # Member routing
 GET 	/							controllers.MemberController.index
 POST 	/members					controllers.MemberController.save
-#POST   /                            controllers.MemberController.authenticate
-GET    /members/balance             controllers.InputController.listBalance(p:Int ?= 0, s:Int ?= 2, f ?= "",u ?= "")
-GET     /login                      controllers.MemberController.login
-POST    /login                      controllers.MemberController.authenticate
-
+GET    	/login                      controllers.MemberController.login
+GET    	/logout                      controllers.MemberController.logout
+POST   	/login                      controllers.MemberController.authenticate
+GET 	/members/new				controllers.MemberController.signUp
+GET    	/members/balance             controllers.InputController.listBalance(p:Int ?= 0, s:Int ?= 2, f ?= "",u ?= "")
 
 # Input routing
-GET     /inputs                  	controllers.InputController.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+#GET     /inputs                  	controllers.InputController.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
 GET     /inputs/new              	controllers.InputController.create
 POST    /inputs                  	controllers.InputController.save
 GET     /inputs/:id              	controllers.InputController.edit(id:Long)
