@@ -1,22 +1,16 @@
-@(form: Form[(String,String)])(implicit flash: Flash)
+@import helper._
 
 @main {
 	
-	@form.globalError.map { error =>
-    	<div class="alert alert-danger">
-        	@error.message
-        </div>
-    }
-         
-    @flash.get("success").map { message =>
-    	<div class="alert alert-success">
-           	@message
-        </div>
-    }
-
 	<div class="row clearfix">
 		<div class="col-md-8 column">
-			@helper.form(routes.MemberController.authenticate, 'class -> "form-horizontal well")  {	
+			@form(routes.MemberController.save(), 'class -> "form-horizontal well") {
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="name">Full name</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="name" name="name">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="email">Email</label>
 					<div class="col-md-4">
@@ -28,10 +22,11 @@
 					<div class="col-md-4">
 						<input type="password" class="form-control" id="password" name="password">
 					</div>
-				</div> 
+				</div>
+	            
 	            <div class="form-group">
 			    	<div class="col-md-4 col-md-offset-4">
-			      		<button type="submit" class="btn btn-primary">Log in</button>
+			      		<button type="submit" class="btn btn-primary">Sign Up</button>
 			    	</div>
 			  	</div>
 			}
@@ -39,7 +34,3 @@
 	</div>
     
 }
-    
-
-
-

@@ -1,4 +1,4 @@
-@(currentPage: Page[(InputData, Option[Member])], currentOrderBy: Int, currentFilter: String, currentMember: String)(implicit flash: play.api.mvc.Flash)
+@(currentPage: Page[(InputData, Option[Member])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
 
 @****************************************
 * Helper generating navigation links    *
@@ -6,7 +6,7 @@
 @link(newPage: Int, newOrderBy: Option[Int] = None) = @{
     routes.InputController.listBalance(newPage, newOrderBy.map { orderBy =>
         if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
-    }.getOrElse(currentOrderBy), currentFilter,currentMember)
+    }.getOrElse(currentOrderBy))
     
 }
 
@@ -53,7 +53,6 @@
                 	@header(2, "#")
                     @header(3, "Input Date")
                     @header(4, "Amount")
-                    @header(5, "Member")
                 </tr>
             </thead>
             <tbody>
@@ -62,9 +61,8 @@
                     case (input, member) => {
                         <tr>
                             <td><a href="@routes.InputController.edit(input.id.get)">@input.id</a></td>
-                            <td>@input.inputdate</td>
+                            <td>@input.inputdate.format("yyyy-MM-dd")</td>
                             <td>@input.amount</td>
-                            <td>@member.map(_.name)</td>
                         </tr>
                     }
                 }

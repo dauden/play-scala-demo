@@ -4,19 +4,24 @@
 
 # Member routing
 GET 	/							controllers.MemberController.index
-POST 	/members					controllers.MemberController.save
+
 GET    	/login                      controllers.MemberController.login
-GET    	/logout                      controllers.MemberController.logout
 POST   	/login                      controllers.MemberController.authenticate
+
 GET 	/members/new				controllers.MemberController.signUp
-GET    	/members/balance             controllers.InputController.listBalance(p:Int ?= 0, s:Int ?= 2, f ?= "",u ?= "")
+POST 	/members/new				controllers.MemberController.save
+
+GET    	/logout                     controllers.MemberController.logout
 
 # Input routing
-#GET     /inputs                  	controllers.InputController.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+GET    	/inputs                  	controllers.InputController.listBalance(p:Int ?= 0, s:Int ?= 2, f ?= "")
+
 GET     /inputs/new              	controllers.InputController.create
-POST    /inputs                  	controllers.InputController.save
+POST    /inputs/new                	controllers.InputController.save
+
 GET     /inputs/:id              	controllers.InputController.edit(id:Long)
 POST    /inputs/:id              	controllers.InputController.update(id:Long)
+
 GET     /inputs/:id/delete       	controllers.InputController.delete(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path

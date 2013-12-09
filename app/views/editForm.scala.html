@@ -1,4 +1,4 @@
-@(id: Long, inputForm: Form[InputData], members : Seq[(String, String)])
+@(id: Long, inputForm: Form[InputData], member : Member)
 
 @import helper._
 
@@ -6,11 +6,11 @@
     
     <div class="row clearfix">
 		<div class="col-md-8 column">
-			@form(routes.InputController.update(id), 'class -> "form-horizontal well") {>
+			@form(routes.InputController.update(id), 'class -> "form-horizontal well") {
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="inputdate">Input date</label>
 					<div class="col-md-4">
-						<input type="text" class="form-control" id="inputdate" name="inputdate" value="@inputForm.get.inputdate">
+						<input type="text" class="form-control" id="inputdate" name="inputdate" value="@inputForm.get.inputdate.format("yyyy-MM-dd")">
 					</div>
 				</div>
 				<div class="form-group">
@@ -19,17 +19,9 @@
 						<input type="text" class="form-control" id="amount" name="amount" value="@inputForm.get.amount">
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="member">Member</label>
-					<div class="col-md-4">
-						<select class="form-control" id="member" name="member">
-							@members.map { member =>
-								<option value="@member._1">@member._2</option> 
-							}
-						</select>
-					</div>
-				</div>
-	            
+				
+				<input type="hidden" name="member" value="@member.id"/>
+				
 	            <div class="form-group">
 			    	<div class="col-md-4 col-md-offset-4">
 			      		<button type="submit" class="btn btn-primary">Save</button>

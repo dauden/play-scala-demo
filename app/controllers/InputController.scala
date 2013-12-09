@@ -6,68 +6,64 @@ import play.api.data._
 import play.api.data.Forms._
 import anorm._
 import views._
-import models._  
+import models._
 
-object InputController extends Controller { 
+object InputController extends Controller with Secured {
 
-  val Home = Redirect(routes.InputController.listBalance(0, 2, "",""))
-  
   val inputForm = Form(
     mapping(
-      "id" -> ignored(NotAssigned:Pk[Long]),
+      "id" -> ignored(NotAssigned: Pk[Long]),
       "inputdate" -> date("yyyy-MM-dd"),
-      "amount" -> longNumber,      
-      "member" -> longNumber
-    )(InputData.apply)(InputData.unapply)
-  )
+      "amount" -> longNumber,
+      "member" -> longNumber)(InputData.apply)(InputData.unapply))
+      
+  def Home = Redirect(routes.InputController.listBalance(0, 2, ""))
   
-  // -- Actions
-  
-  /*def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
+  def listBalance(page: Int, orderBy: Int, filter: String) = withUser { member => implicit request =>
     Ok(html.list(
-      models.Input.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
-      orderBy, filter
-    ))
-  }*/
-  
-  def listBalance(page: Int, orderBy: Int, filter: String, email: String) = Action { implicit request =>
-    Ok(html.list(
-      InputData.listBalance(page = page, orderBy = orderBy, filter = ("%"+filter+"%"), email = email),
-      orderBy, filter,email ))
+      InputData.listBalance(page = page, orderBy = orderBy, filter = ("%" + filter + "%"), email = member.email),
+      orderBy, filter))
   }
-  
-  
-  def edit(id: Long) = Action {
-    InputData.findById(id).map{input =>
-      Ok(html.editForm(id,inputForm.fill(input),Member.options))}.getOrElse(NotFound)
+
+  /*
+   * Edit process
+   */
+  def edit(id: Long) = withUser { member => implicit request =>
+    InputData.findByIdAndMember(id, member.id.get).map { input =>
+      Ok(html.editForm(id, inputForm.fill(input), member))
+    }.getOrElse(NotFound)
   }
-  
-  def update(id: Long) = Action { implicit request =>
+
+  def update(id: Long) = withUser { member => implicit request =>
     inputForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.editForm(id,formWithErrors, Member.options)),
+      formWithErrors => BadRequest(html.editForm(id, formWithErrors, member)),
       input => {
         InputData.update(id, input)
         Home.flashing("success" -> "An input has been updated")
-      }
-    )
+      })
   }
-  
-  def create = Action {
-    Ok(html.createForm(inputForm, Member.options))
+
+  /*
+   * Create process
+   */
+  def create = withUser { member => implicit request =>
+    Ok(html.createForm(inputForm, member))
   }
-  
-  def save = Action { implicit request =>
+
+  def save = withUser { member => implicit request =>
     inputForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.createForm(formWithErrors, Member.options)),
+      formWithErrors => BadRequest(html.createForm(formWithErrors, member)),
       input => {
         InputData.insert(input)
         Home.flashing("success" -> "New input has been created")
-      }
-    )
+      })
   }
-  
-  def delete(id: Long) = Action {
-    InputData.delete(id)
+
+  /*
+   * Delete
+   */
+  def delete(id: Long) = withUser { member => implicit request =>
+    InputData.delete(id, member.id.get)
     Home.flashing("success" -> "Complete deletion")
   }
 

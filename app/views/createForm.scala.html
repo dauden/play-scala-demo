@@ -1,4 +1,4 @@
-@(inputForm: Form[InputData], members: Seq[(String, String)])
+@(inputForm: Form[InputData], member: Member)
 
 @import helper._ 
 
@@ -19,16 +19,8 @@
 						<input type="text" class="form-control" id="amount" name="amount" placeholder="-10000 or 10000">
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="member">Member</label>
-					<div class="col-md-4">
-						<select class="form-control" id="member" name="member">
-							@members.map { member =>
-								<option value="@member._1">@member._2</option> 
-							}
-						</select>
-					</div>
-				</div>
+				
+				<input type="hidden" name="member" value="@member.id"/>
 	            
 	            <div class="form-group">
 			    	<div class="col-md-4 col-md-offset-4">
