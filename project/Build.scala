@@ -8,13 +8,15 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0"
 
     val appDependencies = Seq(
-    	jdbc,
-    	anorm
+      // Add your project dependencies here,
+      "mysql" % "mysql-connector-java" % "5.1.21",
+      "com.typesafe" %% "play-plugins-mailer" % "2.1-RC2",
+      jdbc, anorm
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
       // Add your own project settings here      
+      // testOptions in Test += Tests.Argument("junitxml", "console")
     )
 
 }
-            

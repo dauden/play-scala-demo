@@ -4,11 +4,10 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-
 import anorm._
-
 import views._
 import models._
+import notifiers.EmailNotifier
 
 object MemberController extends Controller {
 
@@ -41,6 +40,7 @@ object MemberController extends Controller {
     loginForm.bindFromRequest.fold(
       formWithErrors => BadRequest(html.login(formWithErrors)),
       user => {
+        EmailNotifier.sendLoginMail(user._1)
         InputController.Home.withSession(Security.username -> user._1)
       })
   }

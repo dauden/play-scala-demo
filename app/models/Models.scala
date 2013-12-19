@@ -49,7 +49,7 @@ object InputData {
         select * from input
         left join member on input.member_id = member.id
         where member.email = {email} and input.inputdate like {filter}
-        order by {orderBy} nulls last
+        order by {orderBy} asc
         limit {pageSize} offset {offset}
       """).on(
           'pageSize -> pageSize,
@@ -144,8 +144,7 @@ object Member {
     DB.withConnection { implicit connection =>
       SQL(
         """
-          insert into member values (
-            (select next value for member_seq), 
+          insert into member values ( 
             {name}, {email}, {password}
           )
         """).on(
