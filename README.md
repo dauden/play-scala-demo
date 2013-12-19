@@ -28,5 +28,4 @@ Members of HVN group will input their monthly (daily) income & daily expense so 
 * Develop the business logic.
 
 ### Deployment
-Create an account on 
-Visit [demo app](http://play-scala-demo.hvn.cloudbees.net) deployed on [Cloudbees](http://www.cloudbees.com).
+Visit [demo app](http://play-scala-demo.hvn.cloudbees.net) deployed via [Cloudbees](http://www.cloudbees.com).
